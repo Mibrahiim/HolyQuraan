@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-adsense-account" content="ca-pub-2625609735952352">
+    <meta name="description" content="Watch Makkah Live 24/7 and listen to Holy Quran Radio from Cairo, Saudi Arabia, and famous reciters. High quality Islamic streaming for free.">
+    <meta name="keywords" content="Quran Live, Makkah Live, Quran Radio Cairo, Saudi Quran Radio, Maher Al Muaiqly, Islamic Radio, Online Quran">
+    <meta name="author" content="Mohamed Ibrahim">
     <title>Holy Quran Live Stream | القرآن الكريم بث مباشر</title>
     
     <!-- Google AdSense (Loaded once here) -->
@@ -48,6 +51,7 @@
             background: #10b981;
             border-radius: 9999px;
             animation: bounce 1.2s infinite ease-in-out;
+            transition: height 0.2s ease;
         }
         .bar:nth-child(2) { animation-delay: 0.1s; height: 40px; }
         .bar:nth-child(3) { animation-delay: 0.2s; height: 50px; }
@@ -69,6 +73,43 @@
             width: 100%;
             height: 40px;
             border-radius: 8px;
+        }
+
+        .prose-custom h3 {
+            color: #34d399; /* emerald-400 */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .prose-custom p {
+            color: #cbd5e1; /* slate-300 */
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .prose-custom ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Custom Play Button Overlay */
+        .play-overlay {
+            transition: all 0.3s ease;
+        }
+        .play-overlay:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -103,7 +144,6 @@
     <main class="flex-grow container mx-auto px-4 py-8 flex flex-col items-center">
         
         <!-- Google AdSense Unit (Autorelaxed) -->
-        <!-- Added max-h-96 to constrain height on mobile -->
         <div class="w-full max-w-4xl max-h-96 mb-8 bg-slate-800/50 rounded-lg shadow-sm border border-slate-700/50 overflow-hidden relative" style="min-height: 200px;">
             <p class="text-[10px] text-slate-600 pt-2 uppercase tracking-widest absolute top-0 left-0 w-full text-center">Advertisement</p>
             
@@ -152,8 +192,8 @@
                         <h2 id="audio-title" class="text-2xl font-bold text-white mb-2 font-arabic">Quran Radio</h2>
                         <p id="audio-subtitle" class="text-slate-300 mb-8">Live Audio Stream</p>
                         
-                        <!-- Visualizer Bars -->
-                        <div class="flex items-end justify-center gap-1 h-12 mb-8">
+                        <!-- Visualizer Bars (Animated when playing) -->
+                        <div id="bars-container" class="flex items-end justify-center gap-1 h-12 mb-8 opacity-50">
                             <div class="bar h-8"></div>
                             <div class="bar h-12"></div>
                             <div class="bar h-6"></div>
@@ -163,14 +203,20 @@
                             <div class="bar h-5"></div>
                         </div>
 
-                        <!-- Native Audio Element -->
-                        <audio id="audio-player" controls preload="auto" class="w-full shadow-lg" crossorigin="anonymous">
+                        <!-- Manual Play Button Overlay (For iOS/Mobile stability) -->
+                        <button id="manual-play-btn" onclick="toggleAudio()" class="play-overlay w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center text-white shadow-xl hover:bg-emerald-400 mb-6 mx-auto">
+                            <i id="play-icon" data-lucide="play" class="w-8 h-8 fill-current ml-1"></i>
+                        </button>
+                        
+                        <p id="status-text" class="text-xs text-slate-400 mt-2 opacity-70">
+                            Tap to Play
+                        </p>
+
+                        <!-- Native Audio Element (Hidden mostly, but controls accessible) -->
+                        <!-- Removed crossorigin="anonymous" to fix CORS issues on some streams -->
+                        <audio id="audio-player" class="hidden">
                             Your browser does not support the audio element.
                         </audio>
-                        
-                        <p class="text-xs text-slate-400 mt-4 opacity-70">
-                            If audio doesn't play, please click the Play button manually.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -253,8 +299,8 @@
             </div>
         </div>
 
-        <!-- Additional Info -->
-        <div class="mt-12 text-center max-w-2xl px-4">
+        <!-- Quote -->
+        <div class="mt-12 mb-12 text-center max-w-2xl px-4">
             <blockquote class="text-xl font-arabic leading-loose text-emerald-100 mb-4">
                 "وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا"
             </blockquote>
@@ -263,11 +309,90 @@
             </p>
         </div>
 
+        <!-- NEW CONTENT SECTION (For SEO & AdSense Value) -->
+        <section class="w-full max-w-4xl bg-slate-800/50 rounded-2xl p-8 border border-slate-700 mt-4 prose-custom">
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- English Content -->
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <i data-lucide="book-open-check" class="text-emerald-500"></i>
+                        Beneficial Knowledge
+                    </h2>
+                    
+                    <article>
+                        <h3>Virtues of Listening to the Quran</h3>
+                        <p>
+                            Listening to the Holy Quran is an act of worship that brings immense tranquility to the heart. Allah (SWT) says in the Quran: "So when the Qur'an is recited, then listen to it and pay attention that you may receive mercy." (Al-A'raf, 7:204). It serves as a spiritual healing, a reminder of our purpose, and a direct connection to the Creator.
+                        </p>
+                    </article>
+
+                    <article>
+                        <h3>About Our Radio Stations</h3>
+                        <p>
+                            <strong>Quran Radio Cairo (98.2 FM):</strong> Established in 1964, it is one of the oldest and most prestigious Quran radio stations in the world. It broadcasts from Cairo, Egypt, featuring legendary reciters like Mahmoud Khalil Al-Hussary, Abdul Basit Abdul Samad, and Mustafa Ismail. It is known for its rigorous verification of recitations and diverse Islamic programming.
+                        </p>
+                        <p>
+                            <strong>Saudi Quran Radio:</strong> Broadcasts directly from Saudi Arabia, offering high-quality recitations 24/7. It frequently features the Imams of the Two Holy Mosques, providing listeners with a direct spiritual link to the lands of revelation.
+                        </p>
+                    </article>
+
+                    <article>
+                        <h3>Etiquette of Listening</h3>
+                        <ul>
+                            <li><strong>Silence & Attention:</strong> Listen attentively and avoid distractions.</li>
+                            <li><strong>Reflection (Tadabbur):</strong> Try to understand the meaning of the verses being recited.</li>
+                            <li><strong>Cleanliness:</strong> While not mandatory for listening (unlike touching the Mushaf), being in a state of Wudu enhances the spiritual experience.</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <!-- Arabic Content -->
+                <div class="text-right" dir="rtl">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2 justify-end font-arabic">
+                        فوائد وموارد قيمة
+                        <i data-lucide="star" class="text-emerald-500"></i>
+                    </h2>
+
+                    <article>
+                        <h3 class="font-arabic text-xl">فضل الاستماع للقرآن الكريم</h3>
+                        <p class="font-arabic text-lg">
+                            الاستماع إلى القرآن الكريم عبادة عظيمة تجلب السكينة والطمأنينة للقلب. قال الله تعالى: ﴿وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنصِتُوا لَعَلَّكُمْ تُرْحَمُونَ﴾. الاستماع بتدبر يفتح أبواب الرحمة الإلهية ويزيد الإيمان في القلب، وهو شفاء لما في الصدور.
+                        </p>
+                    </article>
+
+                    <article>
+                        <h3 class="font-arabic text-xl">نبذة عن الإذاعات المتوفرة</h3>
+                        <p class="font-arabic text-lg">
+                            <strong>إذاعة القرآن الكريم من القاهرة:</strong> تأسست عام 1964، وتعد من أعرق الإذاعات الإسلامية في العالم. تتميز ببث تلاوات نادرة لكبار القراء مثل الشيخ عبد الباسط عبد الصمد، والشيخ المنشاوي، والشيخ الحصري. تعتبر مرجعاً موثوقاً للتلاوة الصحيحة والأحكام الشرعية.
+                        </p>
+                        <p class="font-arabic text-lg">
+                            <strong>إذاعة القرآن الكريم من السعودية:</strong> تبث من مهبط الوحي، وتقدم تلاوات عطرة على مدار الساعة، مع تركيز خاص على تلاوات أئمة الحرمين الشريفين، مما يربط المستمع روحانياً بالأجواء الإيمانية في مكة المكرمة والمدينة المنورة.
+                        </p>
+                    </article>
+
+                    <article>
+                        <h3 class="font-arabic text-xl">آداب الاستماع</h3>
+                        <ul class="font-arabic text-lg list-disc list-inside">
+                            <li><strong>الإنصات والتدبر:</strong> استحضار القلب وفهم معاني الآيات.</li>
+                            <li><strong>الخشوع:</strong> التأثر بالآيات والبكاء من خشية الله عند آيات الوعيد والرحمة.</li>
+                            <li><strong>احترام كلام الله:</strong> عدم الانشغال باللغو أو الحديث الجانبي أثناء التلاوة.</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
     <footer class="border-t border-slate-800 bg-slate-900 py-8 mt-8">
         <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center gap-4 text-xs text-slate-400 mb-4">
+                <button onclick="openModal('privacy')" class="hover:text-emerald-400 underline">Privacy Policy</button>
+                <button onclick="openModal('terms')" class="hover:text-emerald-400 underline">Terms of Use</button>
+                <button onclick="openModal('contact')" class="hover:text-emerald-400 underline">Contact</button>
+            </div>
             <p class="text-slate-500 text-sm">
                 &copy; <script>document.write(new Date().getFullYear())</script> Holy Quran Live. 
                 <br>Sources: Official Saudi TV & MP3Quran.net.
@@ -276,14 +401,105 @@
         </div>
     </footer>
 
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900 border-t border-slate-700 p-4 z-50 hidden">
+        <div class="container mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-slate-300 text-sm text-center sm:text-left">
+                We use cookies to improve your experience and show personalized ads. By using this site, you agree to our <button onclick="openModal('privacy')" class="text-emerald-400 underline">Privacy Policy</button>.
+            </p>
+            <button onclick="acceptCookies()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg text-sm font-bold shadow-lg">
+                Accept
+            </button>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="modal-contact" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal('contact')"></div>
+        <div class="bg-slate-800 rounded-xl p-8 max-w-md w-full relative z-10 border border-slate-700 text-center">
+            <button onclick="closeModal('contact')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-6">Contact Us</h2>
+            
+            <div class="space-y-3">
+                <a href="tel:+96566805723" class="flex items-center justify-center gap-3 p-3 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition-colors text-slate-200 group">
+                    <i data-lucide="phone" class="w-5 h-5 text-emerald-400 group-hover:text-emerald-300"></i>
+                    <span class="font-medium" dir="ltr">+965 66805723</span>
+                </a>
+                
+                <a href="mailto:Mohamed.ibrahimx1199@gmail.com" class="flex items-center justify-center gap-3 p-3 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition-colors text-slate-200 group">
+                    <i data-lucide="mail" class="w-5 h-5 text-emerald-400 group-hover:text-emerald-300"></i>
+                    <span class="font-medium text-sm break-all">Mohamed.ibrahimx1199@gmail.com</span>
+                </a>
+                
+                <a href="https://www.linkedin.com/in/mohamed-ibrahim-3928ba1b9" target="_blank" class="flex items-center justify-center gap-3 p-3 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition-colors text-slate-200 group">
+                    <i data-lucide="linkedin" class="w-5 h-5 text-emerald-400 group-hover:text-emerald-300"></i>
+                    <span class="font-medium">LinkedIn Profile</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="modal-privacy" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal('privacy')"></div>
+        <div class="bg-slate-800 rounded-xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative z-10 border border-slate-700">
+            <button onclick="closeModal('privacy')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-4">Privacy Policy</h2>
+            <div class="prose-custom text-sm">
+                <p><strong>1. Introduction</strong><br>Welcome to Holy Quran Live. We respect your privacy.</p>
+                <p><strong>2. Cookies & Advertising</strong><br>We use Google AdSense to serve ads. Google may use cookies to personalize ads based on your visits to this and other websites. You can opt out of personalized advertising by visiting Google's Ad Settings.</p>
+                <p><strong>3. Data Collection</strong><br>We do not collect personal data directly. We use standard web analytics to improve performance.</p>
+                <p><strong>4. Third-Party Links</strong><br>Our site contains streams from third parties (YouTube, RadioJar). We are not responsible for their content or privacy practices.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="modal-terms" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal('terms')"></div>
+        <div class="bg-slate-800 rounded-xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative z-10 border border-slate-700">
+            <button onclick="closeModal('terms')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-4">Terms of Use</h2>
+            <div class="prose-custom text-sm">
+                <p><strong>1. Usage</strong><br>This website is for personal, non-commercial spiritual use.</p>
+                <p><strong>2. Content</strong><br>All video and audio streams are copyright of their respective owners (Saudi Broadcasting Authority, ERTU Egypt). We simply provide an interface to access these public streams.</p>
+                <p><strong>3. Disclaimer</strong><br>We strive for high uptime but cannot guarantee the availability of third-party streams.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
 
-        // UPDATED & FIXED CHANNELS
+        // Cookie Consent Logic
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookie-banner').classList.remove('hidden');
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
+
+        // Modal Logic
+        function openModal(id) {
+            document.getElementById(`modal-${id}`).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(`modal-${id}`).classList.remove('active');
+        }
+
+        // UPDATED STREAMS for Stability (Windows/Android/iOS)
         const channels = {
             makkah: {
                 type: 'video',
-                // Official Quran TV Channel ID
                 src: 'https://www.youtube.com/embed/live_stream?channel=UCos52azQNBgW63_9uDJoPDA', 
                 external: 'https://www.youtube.com/channel/UCos52azQNBgW63_9uDJoPDA/live',
                 name: 'Makkah Live',
@@ -291,22 +507,22 @@
             },
             radio_cairo: {
                 type: 'audio',
-                // Updated to direct node n03 for better stability
-                src: 'https://n03.radiojar.com/8s5u5tpdtwzuv', 
+                // Primary: Zeno FM (Secure & Reliable for Mobile)
+                src: 'https://stream.zeno.fm/4x4f43v52hhvv', 
                 name: 'Quran Radio Cairo',
                 arabic: 'إذاعة القرآن الكريم - القاهرة'
             },
             radio_saudi: {
                 type: 'audio',
-                // Updated to Qurango Backup (reliable)
+                // Primary: Backup Qurango (Standard MP3)
                 src: 'https://backup.qurango.net/radio/saudi', 
                 name: 'Saudi Quran Radio',
                 arabic: 'إذاعة القرآن الكريم - السعودية'
             },
             radio_maher: {
                 type: 'audio',
-                // Direct reliable stream for Maher
                 src: 'https://qurango.net/radio/maher', 
+                backup: 'https://backup.qurango.net/radio/maher',
                 name: 'Maher Al Muaiqly',
                 arabic: 'الشيخ ماهر المعيقلي'
             }
@@ -319,12 +535,73 @@
         const audioTitle = document.getElementById('audio-title');
         const audioSubtitle = document.getElementById('audio-subtitle');
         const externalLink = document.getElementById('external-link');
+        const manualPlayBtn = document.getElementById('manual-play-btn');
+        const playIcon = document.getElementById('play-icon');
+        const barsContainer = document.getElementById('bars-container');
+        const statusText = document.getElementById('status-text');
+
+        let currentChannelId = 'makkah';
+        let isPlaying = false;
+
+        // Error Handling for Audio
+        audioPlayer.addEventListener('error', function(e) {
+            console.log("Stream Error, checking backup...", e);
+            const channel = channels[currentChannelId];
+            
+            if (channel && channel.backup && audioPlayer.src !== channel.backup) {
+                statusText.innerText = "Switching to Backup Stream...";
+                audioPlayer.src = channel.backup;
+                audioPlayer.load();
+                audioPlayer.play().then(() => {
+                    updatePlayState(true);
+                }).catch(err => {
+                    console.log("Backup play failed", err);
+                    updatePlayState(false);
+                });
+            } else {
+                statusText.innerText = "Connecting... (Tap Play)";
+                updatePlayState(false);
+            }
+        });
+
+        // Update UI based on Play State
+        function updatePlayState(playing) {
+            isPlaying = playing;
+            if (playing) {
+                // Show Pause Icon
+                playIcon.setAttribute('data-lucide', 'pause'); 
+                manualPlayBtn.innerHTML = `<i data-lucide="pause" class="w-8 h-8 fill-current ml-0.5"></i>`;
+                barsContainer.classList.remove('opacity-50');
+                barsContainer.querySelectorAll('.bar').forEach(b => b.style.animationPlayState = 'running');
+                statusText.innerText = "Now Playing";
+            } else {
+                // Show Play Icon
+                manualPlayBtn.innerHTML = `<i data-lucide="play" class="w-8 h-8 fill-current ml-1"></i>`;
+                barsContainer.classList.add('opacity-50');
+                barsContainer.querySelectorAll('.bar').forEach(b => b.style.animationPlayState = 'paused');
+            }
+            lucide.createIcons();
+        }
+        
+        // Manual Toggle
+        function toggleAudio() {
+            if (audioPlayer.paused) {
+                audioPlayer.play().then(() => updatePlayState(true)).catch(e => {
+                    console.log("Play failed", e);
+                    statusText.innerText = "Tap to Play";
+                });
+            } else {
+                audioPlayer.pause();
+                updatePlayState(false);
+                statusText.innerText = "Paused";
+            }
+        }
 
         function switchChannel(channelId) {
             const channel = channels[channelId];
             if (!channel) return;
 
-            // Update Buttons
+            // UI Updates
             document.querySelectorAll('.channel-btn').forEach(btn => {
                 btn.classList.remove('active-channel', 'text-white');
                 btn.classList.add('text-slate-300');
@@ -335,13 +612,12 @@
                 activeBtn.classList.remove('text-slate-300');
             }
 
-            // Update Info
             currentChannelName.innerHTML = `
                 <i data-lucide="${channel.type === 'video' ? 'tv' : 'radio'}" class="w-5 h-5 text-emerald-500"></i>
                 ${channel.name}
             `;
             
-            // Update External Link (Helpful if embed fails)
+            // External Link Update
             if (channel.type === 'video') {
                 externalLink.href = channel.external;
                 externalLink.innerHTML = `<i data-lucide="external-link" class="w-4 h-4"></i> Watch on YouTube`;
@@ -351,35 +627,46 @@
             }
             
             lucide.createIcons();
+            currentChannelId = channelId;
 
             if (channel.type === 'video') {
-                // Audio Cleanup
+                // Stop Audio
                 audioPlayer.pause();
-                audioPlayer.src = ""; // Stop stream
-                audioVisualizer.classList.add('hidden');
+                audioPlayer.src = ""; 
+                audioPlayer.load(); // Release resource
+                updatePlayState(false);
                 
-                // Video Setup
+                audioVisualizer.classList.add('hidden');
                 videoPlayer.classList.remove('hidden');
                 videoPlayer.src = channel.src + "&autoplay=1&mute=0"; 
                 
             } else {
-                // Video Cleanup
-                videoPlayer.src = ""; // Stop bandwidth
+                // Stop Video
+                videoPlayer.src = "";
                 videoPlayer.classList.add('hidden');
                 
-                // Audio Setup
+                // Show Audio UI
                 audioVisualizer.classList.remove('hidden');
                 audioVisualizer.classList.add('flex');
                 
                 audioTitle.innerText = channel.arabic;
                 audioSubtitle.innerText = channel.name;
+                statusText.innerText = "Connecting...";
                 
+                // Audio Logic
+                audioPlayer.pause();
                 audioPlayer.src = channel.src;
-                // Attempt Play
+                audioPlayer.load();
+                
+                // Attempt Auto-Play
                 const playPromise = audioPlayer.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log("Auto-play prevented by browser. User must click play.");
+                    playPromise.then(() => {
+                        updatePlayState(true);
+                    }).catch(error => {
+                        console.log("Auto-play prevented. User needs to tap play.");
+                        updatePlayState(false);
+                        statusText.innerText = "Tap Play Button";
                     });
                 }
             }
