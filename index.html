@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CRITICAL: Allows images from Wikimedia/External sources to load -->
+    <meta name="referrer" content="no-referrer">
+    
     <meta name="google-adsense-account" content="ca-pub-2625609735952352">
-    <meta name="description" content="Watch Makkah Live 24/7 and listen to Holy Quran Radio from Cairo and Saudi Arabia. Read biographies of famous reciters and learn about the history of Quranic broadcasting.">
+    <meta name="description" content="Watch Makkah Live 24/7 and listen to Holy Quran Radio from Cairo and Saudi Arabia. Learn about famous Quran reciters and Quran broadcasting history.">
     <meta name="keywords" content="Quran Live, Makkah Live, Quran Radio Cairo, Saudi Quran Radio, Maher Al Muaiqly, Islamic Radio, Tajweed, Quran History">
     <meta name="author" content="Mohamed Ibrahim">
     <title>Holy Quran Live Stream & Knowledge Hub</title>
+
+    <!-- Image Performance -->
+    <link rel="preconnect" href="https://upload.wikimedia.org">
+    <link rel="dns-prefetch" href="https://upload.wikimedia.org">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2625609735952352" crossorigin="anonymous"></script>
@@ -20,6 +27,60 @@
     
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- ================= STRUCTURED DATA ================= -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Holy Quran Live",
+      "url": "https://quran-live-stream.netlify.app",
+      "description": "Live Quran streaming platform featuring Makkah Live, Quran Radio Cairo, and renowned Quran reciters.",
+      "founder": {
+        "@type": "Person",
+        "name": "Mohamed Ibrahim"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/mohamed-ibrahim-3928ba1b9"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "History of Quran Radio and Famous Quran Reciters",
+      "author": {
+        "@type": "Person",
+        "name": "Mohamed Ibrahim"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Holy Quran Live"
+      },
+      "datePublished": "2024-01-01",
+      "dateModified": "2024-01-01",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://quran-live-stream.netlify.app"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      "contentUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Maher_Al-Muaiqly.jpg",
+      "creator": {
+        "@type": "Person",
+        "name": "Sheikh Maher Al Muaiqly"
+      },
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creditText": "Wikimedia Commons"
+    }
+    </script>
 
     <style>
         body {
@@ -59,12 +120,12 @@
             border-color: #10b981;
         }
         
-        /* Content Styling for AdSense Quality */
-        .prose-custom h2 { color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
-        .prose-custom h3 { color: #34d399; font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; }
-        .prose-custom p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1rem; font-size: 1rem; }
-        .prose-custom ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #cbd5e1; }
-        .prose-custom li { margin-bottom: 0.5rem; }
+        /* Content Styling */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
         
         .modal { transition: opacity 0.3s ease-in-out; opacity: 0; pointer-events: none; }
         .modal.active { opacity: 1; pointer-events: auto; }
@@ -79,6 +140,7 @@
     <nav class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
                         <i data-lucide="book-open" class="w-6 h-6"></i>
@@ -89,6 +151,14 @@
                     </div>
                 </div>
                 
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+                    <a href="#stream" class="hover:text-emerald-400 transition-colors">Live Stream</a>
+                    <a href="#biographies" class="hover:text-emerald-400 transition-colors">Reciters</a>
+                    <a href="#etiquette" class="hover:text-emerald-400 transition-colors">Etiquette</a>
+                </div>
+                
+                <!-- Live Indicator -->
                 <div class="flex items-center gap-2 bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
                     <span class="relative flex h-2.5 w-2.5">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
@@ -118,7 +188,7 @@
         </div>
         
         <!-- Player Container -->
-        <div class="w-full max-w-4xl bg-slate-800 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-slate-700">
+        <div id="stream" class="w-full max-w-4xl bg-slate-800 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-slate-700 scroll-mt-24">
             
             <!-- Video/Audio Area -->
             <div id="player-screen" class="aspect-video w-full bg-black relative flex items-center justify-center">
@@ -243,8 +313,7 @@
         </div>
 
         <!-- NEW: Substantial Content Section for AdSense Approval -->
-        <!-- This section provides original, high-value text content which is critical for meeting AdSense criteria -->
-        <section class="w-full max-w-4xl mt-12 mb-8 bg-slate-800/50 rounded-2xl p-8 border border-slate-700 prose-custom">
+        <section class="w-full max-w-4xl mt-12 mb-8 bg-slate-800/50 rounded-2xl p-8 border border-slate-700">
             
             <!-- Introduction -->
             <div class="text-center mb-10">
@@ -252,135 +321,92 @@
                 <p class="text-slate-400 text-sm italic">"And recite the Qur'an with measured recitation." (Surah Al-Muzzammil, 73:4)</p>
             </div>
 
-            <!-- Tabbed Content or Stacked Articles -->
-            <div class="space-y-12">
+            <!-- Articles Container -->
+            <div class="space-y-12" id="biographies">
                 
-                <!-- Article 1: History of Quran Radio -->
+                <!-- ================= RECITER: MAHER ================= -->
                 <article class="clearfix">
-                    <img src="https://images.unsplash.com/photo-1595068994462-27367d35367d?q=80&w=400&auto=format&fit=crop" 
-                         onerror="this.src='https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=400&auto=format&fit=crop'"
-                         alt="Vintage Microphone - Radio Legacy" 
-                         class="float-none md:float-right ml-0 md:ml-6 mb-4 rounded-xl shadow-lg w-full md:w-64 border border-slate-700 object-cover h-64">
-                    <h2>The Legacy of Quran Radio Cairo</h2>
-                    <p>
-                        Established on March 29, 1964, the <strong>Quran Radio from Cairo (Idha'at al-Quran al-Karim)</strong> holds a distinct place in the hearts of Muslims worldwide. It was the first specialized radio station in the world dedicated entirely to the broadcast of the Holy Quran and Islamic programs.
-                    </p>
-                    <p>
-                        The station was founded under the directive of the late President Gamal Abdel Nasser to counter distorted versions of the Quran that were appearing at the time. It became a fortress for the preservation of the authentic oral tradition of Quranic recitation (Tajweed).
-                    </p>
-                    <h3>Legendary Reciters</h3>
-                    <p>
-                        Cairo Radio introduced the world to the "Golden Generation" of Egyptian reciters. Legends such as <strong>Mahmoud Khalil Al-Hussary</strong>, <strong>Abdul Basit Abdul Samad</strong>, <strong>Mustafa Ismail</strong>, and <strong>Mohamed Siddiq El-Minshawi</strong> became household names through this frequency. Their recordings, rigorously verified by Al-Azhar scholars, remain the standard for correct recitation today.
-                    </p>
-                </article>
-
-                <!-- Article 2: Biography -->
-                <article class="clearfix">
-                    <!-- Updated Image Source for Sheikh Maher -->
-                    <img src="https://i1.sndcdn.com/artworks-000667825597-152504-t500x500.jpg" 
-                         onerror="this.src='https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=400&auto=format&fit=crop'"
-                         alt="Sheikh Maher Al Muaiqly" 
-                         class="float-none md:float-left mr-0 md:mr-6 mb-4 rounded-xl shadow-lg w-full md:w-64 border border-slate-700 object-cover h-64">
-                    <h2>Reciter Spotlight: Sheikh Maher Al Muaiqly</h2>
-                    <p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Maher_Al-Muaiqly.jpg"
+                         alt="Sheikh Maher Al Muaiqly"
+                         width="256" height="256"
+                         loading="lazy" decoding="async" fetchpriority="low"
+                         class="float-none md:float-left mr-0 md:mr-6 mb-4 rounded-xl shadow-lg w-full md:w-64 h-64 object-cover border border-slate-700">
+                    
+                    <h2 class="text-2xl font-bold text-white mb-2">Reciter Spotlight: Sheikh Maher Al Muaiqly</h2>
+                    <p class="text-slate-300 leading-relaxed mb-4">
                         Sheikh Maher bin Hamad Al Muaiqly is one of the most beloved Imams of the Grand Mosque (Masjid Al-Haram) in Makkah. Known for his emotional and soulful voice, his recitation style is widely recognized for its clarity and ability to move listeners to tears.
                     </p>
-                    <h3>Early Life and Education</h3>
-                    <p>
-                        Born in Madinah in 1969, Sheikh Maher was a mathematics teacher before dedicating his life fully to the Quran. He memorized the Holy Quran at a young age and pursued higher Islamic studies, earning a Master’s degree in Sharia from Umm Al-Qura University in 2004 and later a PhD.
-                    </p>
-                    <p>
-                        He led prayers at Masjid Al-Nabawi in Madinah during Ramadan in 2005 and 2006, before being appointed as a permanent Imam at Masjid Al-Haram in Makkah in 2007. His recitation is broadcast daily on our specialized channel here.
+                    <p class="text-slate-300 leading-relaxed">
+                        Born in Madinah in 1969, he was a mathematics teacher before dedicating his life fully to the Quran. He led prayers at Masjid Al-Nabawi before being appointed as a permanent Imam at Masjid Al-Haram in 2007.
                     </p>
                 </article>
 
-                <!-- NEW: Legends of Recitation Section -->
+                <!-- ================= RECITER: ABDUL BASIT ================= -->
                 <article class="clearfix">
-                    <!-- Fixed Image Source for Abdul Basit (Wikimedia) -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Abdul_Basit_Abdul_Samad.jpg" 
-                         onerror="this.src='https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=400&auto=format&fit=crop'"
-                         alt="Sheikh Abdul Basit Abdul Samad" 
-                         class="float-none md:float-right ml-0 md:ml-6 mb-4 rounded-xl shadow-lg w-full md:w-64 border border-slate-700 object-cover h-64">
-                    <h2>The Golden Throat: Sheikh Abdul Basit Abdul Samad</h2>
-                    <p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Abdul_Basit_Abdul_Samad.jpg"
+                         alt="Sheikh Abdul Basit Abdul Samad"
+                         width="256" height="256"
+                         loading="lazy" decoding="async" fetchpriority="low"
+                         class="float-none md:float-right ml-0 md:ml-6 mb-4 rounded-xl shadow-lg w-full md:w-64 h-64 object-cover border border-slate-700">
+                    
+                    <h2 class="text-2xl font-bold text-white mb-2">The Golden Throat: Sheikh Abdul Basit Abdul Samad</h2>
+                    <p class="text-slate-300 leading-relaxed mb-4">
                         Sheikh Abdul Basit Abdul Samad (1927–1988) is arguably the most famous Quran reciter in modern history. Known as "The Golden Throat" and "The Voice of Mecca," his recitation style transcended borders and captivated listeners across the globe.
                     </p>
-                    <h3>Unique Style</h3>
-                    <p>
-                        He was renowned for his extraordinary breath control and his ability to recite for long periods without pausing, often modulating his voice through high octaves with perfect clarity. His recitation of Surah Ar-Rahman and Surah Yusuf remains iconic to this day. In the 1950s, he traveled extensively, reciting in major mosques in Jerusalem, Baghdad, and Karachi, drawing massive crowds that often filled stadiums.
+                    <p class="text-slate-300 leading-relaxed">
+                        He was renowned for his extraordinary breath control and his ability to recite for long periods without pausing, often modulating his voice through high octaves with perfect clarity. His recitation of Surah Ar-Rahman remains iconic.
                     </p>
                 </article>
 
+                <!-- ================= RECITER: MINSHAWI ================= -->
                 <article class="clearfix">
-                    <!-- Fixed Image Source for Minshawi (Wikimedia) -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Mohamed_Siddiq_El-Minshawi.jpg" 
-                         onerror="this.src='https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=400&auto=format&fit=crop'"
-                         alt="Sheikh Mohamed Siddiq Al-Minshawi" 
-                         class="float-none md:float-left mr-0 md:mr-6 mb-4 rounded-xl shadow-lg w-full md:w-64 border border-slate-700 object-cover h-64">
-                    <h2>The Weeping Voice: Sheikh Mohamed Siddiq Al-Minshawi</h2>
-                    <p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Mohamed_Siddiq_El-Minshawi.jpg"
+                         alt="Sheikh Mohamed Siddiq Al-Minshawi"
+                         width="256" height="256"
+                         loading="lazy" decoding="async" fetchpriority="low"
+                         class="float-none md:float-left mr-0 md:mr-6 mb-4 rounded-xl shadow-lg w-full md:w-64 h-64 object-cover border border-slate-700">
+                    
+                    <h2 class="text-2xl font-bold text-white mb-2">The Weeping Voice: Sheikh Mohamed Siddiq Al-Minshawi</h2>
+                    <p class="text-slate-300 leading-relaxed mb-4">
                         Sheikh Mohamed Siddiq Al-Minshawi (1920–1969) famously possessed "The Weeping Voice" (Al-Sawt Al-Baki). His recitation is characterized by a deep, emotional sadness that instantly humbles the heart of the listener.
                     </p>
-                    <h3>A Family of Reciters</h3>
-                    <p>
-                        Born in Upper Egypt into a family of Quranic reciters, his father was the great Sheikh Siddiq Al-Minshawi. Despite his short life and chronic illness, his recordings are considered treasures of the Islamic world. He was known for his extreme humility and refusal of fame or high positions, preferring to live a simple life dedicated to the Book of Allah.
+                    <p class="text-slate-300 leading-relaxed">
+                        Born in Upper Egypt into a family of Quranic reciters, his recordings are considered treasures of the Islamic world. He was known for his extreme humility and refusal of fame, living a simple life dedicated to the Book of Allah.
                     </p>
                 </article>
 
+                <!-- ================= RECITER: HUSSARY ================= -->
                 <article class="clearfix">
-                    <!-- Fixed Image Source for Hussary (Wikimedia) -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Mahmoud_Khalil_Al-Hussary.jpg" 
-                         onerror="this.src='https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=400&auto=format&fit=crop'"
-                         alt="Sheikh Mahmoud Khalil Al-Hussary" 
-                         class="float-none md:float-right ml-0 md:ml-6 mb-4 rounded-xl shadow-lg w-full md:w-64 border border-slate-700 object-cover h-64">
-                    <h2>The Master of Tajweed: Sheikh Mahmoud Khalil Al-Hussary</h2>
-                    <p>
-                        Sheikh Mahmoud Khalil Al-Hussary (1917–1980) was a giant of accuracy and precision. He holds the historic distinction of being the first reciter to record the entire Quran in the Murattal style (audio) in 1961, setting the standard for generations of students.
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Mahmoud_Khalil_Al-Hussary.jpg"
+                         alt="Sheikh Mahmoud Khalil Al-Hussary"
+                         width="256" height="256"
+                         loading="lazy" decoding="async" fetchpriority="low"
+                         class="float-none md:float-right ml-0 md:ml-6 mb-4 rounded-xl shadow-lg w-full md:w-64 h-64 object-cover border border-slate-700">
+                    
+                    <h2 class="text-2xl font-bold text-white mb-2">The Master of Tajweed: Sheikh Mahmoud Khalil Al-Hussary</h2>
+                    <p class="text-slate-300 leading-relaxed mb-4">
+                        Sheikh Mahmoud Khalil Al-Hussary (1917–1980) was a giant of accuracy and precision. He holds the historic distinction of being the first reciter to record the entire Quran in the Murattal style (audio) in 1961.
                     </p>
-                    <h3>Legacy of Precision</h3>
-                    <p>
-                        Unlike others who focused on melodic variation, Al-Hussary emphasized the strict rules of Tajweed and clarity of pronunciation above all else. He authored several books on Quranic sciences and was elected the head of the Egyptian Reciters' Union. His recitation is widely recommended for students learning how to pronounce the Arabic letters correctly.
+                    <p class="text-slate-300 leading-relaxed">
+                        Unlike others who focused on melodic variation, Al-Hussary emphasized the strict rules of Tajweed and clarity of pronunciation above all else. His recitation is widely recommended for students learning correct pronunciation.
                     </p>
                 </article>
 
-                <!-- Article 3: Educational -->
-                <article>
-                    <h2>The Etiquette (Adab) of Listening to the Quran</h2>
-                    <p>
-                        Listening to the Quran is not merely a passive act but a form of worship (`Ibadah`) that earns great rewards. To maximize the spiritual benefit, one should observe the following etiquettes:
-                    </p>
-                    <ul>
-                        <li><strong>Attentive Silence (Al-Insat):</strong> Allah says in the Quran, "So when the Qur'an is recited, then listen to it and pay attention that you may receive mercy." (7:204). One should avoid talking or distractions while the Quran is being played.</li>
-                        <li><strong>Reflection (Tadabbur):</strong> Try to contemplate the meaning of the verses. Even for non-Arabic speakers, listening with a humble heart can induce a state of spiritual connection.</li>
-                        <li><strong>Emotional Response (Khushu):</strong> It is recommended to feel the weight of the words, crying or feeling a sense of awe when verses of punishment or divine majesty are read, and feeling hope when verses of mercy are read.</li>
-                        <li><strong>Purity:</strong> While not mandatory for the listener (unlike the one touching the Mushaf), being in a state of Wudu (ablution) is preferable and enhances the sanctity of the experience.</li>
+                <!-- Etiquette Section -->
+                <article id="etiquette" class="scroll-mt-24 pt-8 border-t border-slate-700">
+                    <h2 class="text-2xl font-bold text-white mb-4">The Etiquette of Listening</h2>
+                    <ul class="list-disc pl-6 space-y-2 text-slate-300">
+                        <li><strong>Attentive Silence (Al-Insat):</strong> Avoid talking or distractions while the Quran is being played.</li>
+                        <li><strong>Reflection (Tadabbur):</strong> Try to contemplate the meaning of the verses.</li>
+                        <li><strong>Emotional Response:</strong> Feel the weight of the words and the divine message.</li>
                     </ul>
-                </article>
-
-                <!-- FAQ Section -->
-                <article>
-                    <h2>Frequently Asked Questions (FAQ)</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <h3 class="text-white text-lg font-bold">Why is the audio not playing automatically?</h3>
-                            <p class="text-sm">Most modern browsers (Chrome, Safari, Edge) block audio from playing automatically to prevent user annoyance. You simply need to click the large "Play" button on the screen to start the stream.</p>
-                        </div>
-                        <div>
-                            <h3 class="text-white text-lg font-bold">Is this service free?</h3>
-                            <p class="text-sm">Yes, this website is completely free. We do not charge for access to any of the live streams from Makkah, Madinah, or the radio stations.</p>
-                        </div>
-                        <div>
-                            <h3 class="text-white text-lg font-bold">What should I do if the stream stops?</h3>
-                            <p class="text-sm">We use a smart backup system. If a stream stops, wait a few seconds, and our system will try to switch to a backup server. If it persists, try refreshing the page or checking your internet connection.</p>
-                        </div>
-                    </div>
                 </article>
 
             </div>
             
             <!-- Disclaimer -->
             <div class="border-t border-slate-700 mt-12 pt-6 text-center text-xs text-slate-500">
-                <p><strong>Content Disclaimer:</strong> This website is a transformative work that aggregates public broadcast streams to facilitate access to the Holy Quran. We do not host the stream files directly. All audio and video content belongs to their respective broadcasters (SBA, ERTU, etc.). The articles provided above are original educational content written for this platform.</p>
+                <p><strong>Content Disclaimer:</strong> This website is a transformative work aggregating public broadcast streams. We do not host the stream files directly. All audio/video content belongs to their respective broadcasters.</p>
             </div>
         </section>
 
@@ -394,7 +420,9 @@
                 <button onclick="openModal('terms')" class="hover:text-emerald-400 underline">Terms of Use</button>
                 <button onclick="openModal('contact')" class="hover:text-emerald-400 underline">Contact</button>
             </div>
-            <p class="text-slate-500 text-sm">&copy; <script>document.write(new Date().getFullYear())</script> Holy Quran Live. <br>Sources: Official Saudi TV & MP3Quran.net.<br><span class="text-emerald-500/60 mt-2 block">Designed by Mohamed Ibrahim</span></p>
+            <p class="text-slate-500 text-sm">&copy; <script>document.write(new Date().getFullYear())</script> Holy Quran Live.</p>
+            <p class="text-slate-600 text-xs mt-2">Images courtesy of Wikimedia Commons (Public Domain / Creative Commons).</p>
+            <p class="text-emerald-500/60 text-xs mt-2">Designed by Mohamed Ibrahim</p>
         </div>
     </footer>
 
@@ -425,10 +453,8 @@
             <button onclick="closeModal('privacy')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
             <h2 class="text-2xl font-bold text-white mb-4">Privacy Policy</h2>
             <div class="prose-custom text-sm">
-                <p><strong>1. Introduction</strong><br>Welcome to Holy Quran Live. We respect your privacy and are committed to protecting it.</p>
-                <p><strong>2. Cookies & Advertising</strong><br>We use Google AdSense to serve ads. Google may use cookies to personalize ads based on your visits to this and other websites. You can opt out of personalized advertising by visiting Google's Ad Settings.</p>
-                <p><strong>3. Content Policy</strong><br>This site provides educational content regarding the Quran and aggregators for public broadcasts. We strive to ensure all text content is accurate and original.</p>
-                <p><strong>4. Third-Party Links</strong><br>Our site contains streams from third parties (YouTube, Qurango, Zeno). We are not responsible for their content or privacy practices.</p>
+                <p><strong>Data & Cookies:</strong> We use Google AdSense which uses cookies to serve ads based on user visits. You can opt out via Google Ad Settings.</p>
+                <p><strong>Content:</strong> All streams are third-party content (YouTube, Qurango, Zeno). We do not host audio files.</p>
             </div>
         </div>
     </div>
@@ -438,10 +464,7 @@
         <div class="bg-slate-800 rounded-xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative z-10 border border-slate-700">
             <button onclick="closeModal('terms')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
             <h2 class="text-2xl font-bold text-white mb-4">Terms of Use</h2>
-            <div class="prose-custom text-sm">
-                <p><strong>1. Usage</strong><br>This website is for personal, non-commercial spiritual use and educational purposes.</p>
-                <p><strong>2. Accuracy</strong><br>While we attempt to ensure the streams are active, we cannot guarantee 100% uptime as they are dependent on third-party broadcasters.</p>
-            </div>
+            <div class="prose-custom text-sm"><p>For personal spiritual use only. We are not responsible for third-party stream availability.</p></div>
         </div>
     </div>
 
