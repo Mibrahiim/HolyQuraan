@@ -1,139 +1,452 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holy Quran Live Stream | القرآن الكريم بث مباشر</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts: Google Fonts (Amiri for Arabic, Inter for English) -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<title>Holy Quran Live Stream & Knowledge Hub</title>
-<meta name="description" content="Watch Makkah Live 24/7 and listen to Holy Quran Radio from Cairo and Saudi Arabia. Learn about famous Quran reciters and Quran broadcasting history.">
-<meta name="author" content="Mohamed Ibrahim">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://YOUR-DOMAIN.com">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc;
+        }
+        .font-arabic {
+            font-family: 'Amiri', serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+        
+        /* Audio Visualizer Animation */
+        .bar {
+            width: 6px;
+            background: #10b981;
+            border-radius: 9999px;
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+        .bar:nth-child(2) { animation-delay: 0.1s; height: 40px; }
+        .bar:nth-child(3) { animation-delay: 0.2s; height: 50px; }
+        .bar:nth-child(4) { animation-delay: 0.3s; height: 35px; }
+        .bar:nth-child(5) { animation-delay: 0.4s; height: 45px; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scaleY(0.5); opacity: 0.5; }
+            50% { transform: scaleY(1.2); opacity: 1; }
+        }
 
-<!-- ================= CONTENT SECURITY POLICY ================= -->
-<meta http-equiv="Content-Security-Policy"
-content="
-default-src 'self' https: data:;
-img-src 'self' https: data: blob:;
-media-src https: data:;
-frame-src https:;
-script-src 'self' https: 'unsafe-inline' 'unsafe-eval';
-style-src 'self' https: 'unsafe-inline';
-">
+        .active-channel {
+            background-color: #10b981; /* Emerald 500 */
+            color: white;
+            border-color: #10b981;
+        }
 
-<!-- ================= PERFORMANCE ================= -->
-<link rel="preconnect" href="https://upload.wikimedia.org">
-<link rel="dns-prefetch" href="https://upload.wikimedia.org">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link rel="preload" as="style" href="https://cdn.tailwindcss.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Amiri&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest" defer></script>
-
-<style>
-body { font-family: 'Inter', system-ui, sans-serif; }
-</style>
-
-<!-- ================= STRUCTURED DATA ================= -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Holy Quran Live",
-  "url": "https://YOUR-DOMAIN.com",
-  "description": "Live Quran streaming platform featuring Makkah Live, Quran Radio Cairo, and renowned Quran reciters.",
-  "founder": { "@type": "Person", "name": "Mohamed Ibrahim" },
-  "sameAs": ["https://www.linkedin.com/in/mohamed-ibrahim-3928ba1b9"]
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "History of Quran Radio and Famous Quran Reciters",
-  "author": { "@type": "Person", "name": "Mohamed Ibrahim" },
-  "publisher": { "@type": "Organization", "name": "Holy Quran Live" },
-  "datePublished": "2024-01-01",
-  "dateModified": "2024-01-01",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://YOUR-DOMAIN.com"
-  }
-}
-</script>
-
+        /* Ramadan Background Pattern */
+        .ramadan-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f59e0b' fill-opacity='0.03'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
+<body class="flex flex-col min-h-screen ramadan-pattern">
 
-<body class="bg-slate-900 text-slate-100">
+    <!-- Navbar -->
+    <nav class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-slate-900 shadow-lg shadow-amber-500/20">
+                        <i data-lucide="moon" class="w-6 h-6 fill-slate-900/20"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-amber-500 tracking-wide flex items-center gap-2">
+                            QuranLive
+                            <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
+                        </h1>
+                        <p class="text-xs text-emerald-400 font-arabic tracking-wider">القرآن الكريم بث مباشر</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-2 bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
+                    <span class="relative flex h-2.5 w-2.5">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                    </span>
+                    <span class="text-xs font-semibold text-red-400 uppercase tracking-widest">Live</span>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<main class="max-w-4xl mx-auto px-4 py-12 space-y-24">
+    <!-- Ramadan Greeting Banner -->
+    <div class="bg-gradient-to-r from-amber-900/40 via-emerald-900/40 to-amber-900/40 border-b border-amber-500/20 backdrop-blur-sm relative overflow-hidden">
+        <!-- Decorative subtle crescents -->
+        <i data-lucide="moon" class="absolute -left-4 -top-4 w-16 h-16 text-amber-500/10"></i>
+        <i data-lucide="moon" class="absolute -right-4 -bottom-4 w-16 h-16 text-emerald-500/10"></i>
+        
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 relative z-10">
+            <div class="flex items-center gap-2 text-amber-300">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-300"></i>
+                <span class="font-arabic font-bold text-lg">رمضان كريم - تقبل الله طاعتكم</span>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-300"></i>
+            </div>
+            <div class="hidden sm:block text-emerald-500/50">|</div>
+            <div class="text-emerald-300 text-sm font-medium tracking-wider uppercase">
+                Ramadan Kareem
+            </div>
+        </div>
+    </div>
 
-<!-- ================= ABDUL BASIT ================= -->
-<article class="clearfix">
-<img
-  src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Abdul_Basit_Abdul_Samad.jpg"
-  alt="Sheikh Abdul Basit Abdul Samad"
-  width="256" height="256"
-  loading="lazy" decoding="async"
-  referrerpolicy="strict-origin-when-cross-origin"
-  onerror="this.onerror=null;this.src='/images/reciter-placeholder.jpg';"
-  class="float-none md:float-right ml-0 md:ml-6 mb-4 w-full md:w-64 h-64 rounded-xl object-cover border border-slate-700 shadow-lg">
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 flex flex-col items-center relative z-10">
+        
+        <!-- Player Container -->
+        <div class="w-full max-w-4xl bg-slate-800 rounded-2xl overflow-hidden shadow-2xl shadow-amber-900/20 border border-slate-700">
+            
+            <!-- Video/Audio Area -->
+            <div id="player-screen" class="aspect-video w-full bg-black relative flex items-center justify-center">
+                <!-- Loading Spinner -->
+                <div id="loader" class="absolute inset-0 flex items-center justify-center z-0">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+                </div>
 
-<h2 class="text-2xl font-bold mb-2">The Golden Throat: Sheikh Abdul Basit Abdul Samad</h2>
-<p class="text-slate-300 leading-relaxed">
-One of the most famous Quran reciters in history, known for exceptional breath control and clarity.
-</p>
-</article>
+                <!-- Video Iframe -->
+                <!-- Note: Autoplay policies typically require the video to be muted to start automatically -->
+                <iframe 
+                    id="video-player"
+                    class="w-full h-full relative z-10" 
+                    src="" 
+                    title="Live Stream" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
 
-<!-- ================= MINSHAWI ================= -->
-<article class="clearfix">
-<img
-  src="https://upload.wikimedia.org/wikipedia/commons/0/07/Mohamed_Siddiq_El-Minshawi.jpg"
-  alt="Sheikh Mohamed Siddiq Al-Minshawi"
-  width="256" height="256"
-  loading="lazy" decoding="async"
-  referrerpolicy="strict-origin-when-cross-origin"
-  onerror="this.onerror=null;this.src='/images/reciter-placeholder.jpg';"
-  class="float-none md:float-left mr-0 md:mr-6 mb-4 w-full md:w-64 h-64 rounded-xl object-cover border border-slate-700 shadow-lg">
+                <!-- Audio Visualization (Hidden by default) -->
+                <div id="audio-visualizer" class="hidden absolute inset-0 z-20 bg-slate-900 flex-col items-center justify-center bg-[url('https://images.unsplash.com/photo-1597843702131-4876258d4a93?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center">
+                    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+                    <div class="relative z-10 text-center px-4 w-full max-w-lg">
+                        <div class="w-24 h-24 bg-gradient-to-br from-emerald-600/20 to-amber-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-amber-500/40 relative">
+                            <i data-lucide="radio" class="w-10 h-10 text-amber-400"></i>
+                            <i data-lucide="moon" class="absolute -top-2 -right-2 w-6 h-6 text-amber-300 fill-amber-300/20"></i>
+                        </div>
+                        <h2 id="audio-title" class="text-2xl font-bold text-white mb-2 font-arabic">Quran Radio</h2>
+                        <p id="audio-subtitle" class="text-slate-300 mb-8">Live Audio Stream</p>
+                        
+                        <!-- Visualizer Bars -->
+                        <div class="flex items-end justify-center gap-1 h-12 mb-8">
+                            <div class="bar h-8"></div>
+                            <div class="bar h-12"></div>
+                            <div class="bar h-6"></div>
+                            <div class="bar h-10"></div>
+                            <div class="bar h-7"></div>
+                            <div class="bar h-11"></div>
+                            <div class="bar h-5"></div>
+                        </div>
 
-<h2 class="text-2xl font-bold mb-2">The Weeping Voice: Sheikh Mohamed Siddiq Al-Minshawi</h2>
-<p class="text-slate-300 leading-relaxed">
-Renowned for emotional humility and deeply moving recitation style.
-</p>
-</article>
+                        <!-- Native Audio Element -->
+                        <audio id="audio-player" controls preload="auto" class="w-full shadow-lg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        
+                        <p class="text-xs text-slate-400 mt-4 opacity-70">
+                            If audio doesn't play automatically, please click the Play button.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<!-- ================= HUSSARY ================= -->
-<article class="clearfix">
-<img
-  src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Mahmoud_Khalil_Al-Hussary.jpg"
-  alt="Sheikh Mahmoud Khalil Al-Hussary"
-  width="256" height="256"
-  loading="lazy" decoding="async"
-  referrerpolicy="strict-origin-when-cross-origin"
-  onerror="this.onerror=null;this.src='/images/reciter-placeholder.jpg';"
-  class="float-none md:float-right ml-0 md:ml-6 mb-4 w-full md:w-64 h-64 rounded-xl object-cover border border-slate-700 shadow-lg">
+            <!-- Controls / Info -->
+            <div class="p-6 bg-slate-800">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div>
+                        <h2 id="current-channel-name" class="text-xl font-bold text-white flex items-center gap-2">
+                            <i data-lucide="tv" class="w-5 h-5 text-emerald-500"></i>
+                            Makkah Live
+                        </h2>
+                        <p class="text-slate-400 text-sm mt-1">Official Broadcast</p>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <!-- Direct Link Button (Fallback) -->
+                        <a id="external-link" href="#" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg transition-colors text-sm font-medium border border-slate-600">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            <span>Watch on YouTube</span>
+                        </a>
+                        
+                        <button onclick="shareLink()" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors text-sm font-medium shadow-lg shadow-emerald-600/20">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<h2 class="text-2xl font-bold mb-2">Master of Tajweed: Sheikh Mahmoud Khalil Al-Hussary</h2>
-<p class="text-slate-300 leading-relaxed">
-The first to record the complete Quran in Murattal style, setting the global Tajweed standard.
-</p>
-</article>
+        <!-- Channel Selector -->
+        <div class="w-full max-w-4xl mt-8">
+            <h3 class="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-4 flex items-center gap-2">
+                <i data-lucide="list" class="w-4 h-4"></i> Select Channel / اختر القناة
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <!-- Channel 1: Makkah Video -->
+                <button onclick="switchChannel('makkah')" id="btn-makkah" class="channel-btn active-channel p-4 rounded-xl border border-slate-700 bg-slate-800 hover:border-emerald-500 transition-all text-left group">
+                    <div class="flex items-start justify-between mb-2">
+                        <i data-lucide="video" class="w-5 h-5 group-hover:text-emerald-400 transition-colors"></i>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-black/30 text-emerald-400">HD Live</span>
+                    </div>
+                    <div class="font-bold text-lg mb-1">Makkah Live</div>
+                    <div class="font-arabic text-sm opacity-70">الحرم المكي مباشر</div>
+                </button>
 
-</main>
+                <!-- Channel 2: Cairo Radio -->
+                <button onclick="switchChannel('radio_cairo')" id="btn-radio_cairo" class="channel-btn p-4 rounded-xl border border-slate-700 bg-slate-800 hover:border-emerald-500 transition-all text-left group text-slate-300 hover:text-white">
+                    <div class="flex items-start justify-between mb-2">
+                        <i data-lucide="radio" class="w-5 h-5 group-hover:text-emerald-400 transition-colors"></i>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-black/30 text-blue-400">Cairo FM</span>
+                    </div>
+                    <div class="font-bold text-lg mb-1">Quran Cairo</div>
+                    <div class="font-arabic text-sm opacity-70">إذاعة القرآن - القاهرة</div>
+                </button>
 
-<footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-400">
-<p>© 2025 Holy Quran Live</p>
-<p class="mt-2">Images courtesy of Wikimedia Commons (Public Domain / Creative Commons).</p>
-</footer>
+                <!-- Channel 3: Saudi Radio -->
+                <button onclick="switchChannel('radio_saudi')" id="btn-radio_saudi" class="channel-btn p-4 rounded-xl border border-slate-700 bg-slate-800 hover:border-emerald-500 transition-all text-left group text-slate-300 hover:text-white">
+                    <div class="flex items-start justify-between mb-2">
+                        <i data-lucide="radio" class="w-5 h-5 group-hover:text-emerald-400 transition-colors"></i>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-black/30 text-blue-400">Saudi FM</span>
+                    </div>
+                    <div class="font-bold text-lg mb-1">Saudi Quran</div>
+                    <div class="font-arabic text-sm opacity-70">إذاعة القرآن - السعودية</div>
+                </button>
 
-<script>
-requestIdleCallback(() => lucide.createIcons());
-</script>
+                <!-- Channel 4: Specific Reciter -->
+                <button onclick="switchChannel('radio_maher')" id="btn-radio_maher" class="channel-btn p-4 rounded-xl border border-slate-700 bg-slate-800 hover:border-emerald-500 transition-all text-left group text-slate-300 hover:text-white">
+                    <div class="flex items-start justify-between mb-2">
+                        <i data-lucide="mic" class="w-5 h-5 group-hover:text-emerald-400 transition-colors"></i>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-black/30 text-blue-400">Reciter</span>
+                    </div>
+                    <div class="font-bold text-lg mb-1">Maher Al Muaiqly</div>
+                    <div class="font-arabic text-sm opacity-70">ماهر المعيقلي</div>
+                </button>
 
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="mt-12 text-center max-w-2xl px-4 relative">
+            <i data-lucide="moon" class="w-12 h-12 text-amber-500/10 absolute left-1/2 -top-8 -translate-x-1/2 fill-amber-500/5"></i>
+            <blockquote class="text-xl font-arabic leading-loose text-amber-100 mb-4 relative z-10">
+                "شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ وَالْفُرْقَانِ"
+            </blockquote>
+            <p class="text-slate-400 text-sm relative z-10">
+                "The month of Ramadhan [is that] in which was revealed the Qur'an, a guidance for the people and clear proofs of guidance and criterion." (Surah Al-Baqarah, 2:185)
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900 py-8 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm">
+                &copy; <script>document.write(new Date().getFullYear())</script> Holy Quran Live. 
+                <br>Sources: Official Saudi TV & MP3Quran.net.
+                <br><span class="text-emerald-500/60 mt-2 block">Designed by Mohamed Ibrahim</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification (Hidden by default) -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-emerald-600 text-white px-6 py-3 rounded-lg shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2 pointer-events-none">
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        <span id="toast-message" class="font-medium text-sm">Link copied!</span>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Channels Configuration
+        const channels = {
+            makkah: {
+                type: 'video',
+                src: 'https://www.youtube.com/embed/live_stream?channel=UCos52azQNBgW63_9uDJoPDA', 
+                external: 'https://www.youtube.com/channel/UCos52azQNBgW63_9uDJoPDA/live',
+                name: 'Makkah Live',
+                arabic: 'الحرم المكي مباشر'
+            },
+            radio_cairo: {
+                type: 'audio',
+                src: 'https://stream.radiojar.com/8s5u5tpdtwzuv', 
+                name: 'Quran Radio Cairo',
+                arabic: 'إذاعة القرآن الكريم - القاهرة'
+            },
+            radio_saudi: {
+                type: 'audio',
+                src: 'https://stream.radiojar.com/4wqre23fytzuv', 
+                name: 'Saudi Quran Radio',
+                arabic: 'إذاعة القرآن الكريم - السعودية'
+            },
+            radio_maher: {
+                type: 'audio',
+                src: 'https://qurango.net/radio/maher', 
+                name: 'Maher Al Muaiqly',
+                arabic: 'الشيخ ماهر المعيقلي'
+            }
+        };
+
+        // DOM Elements
+        const videoPlayer = document.getElementById('video-player');
+        const audioPlayer = document.getElementById('audio-player');
+        const audioVisualizer = document.getElementById('audio-visualizer');
+        const currentChannelName = document.getElementById('current-channel-name');
+        const audioTitle = document.getElementById('audio-title');
+        const audioSubtitle = document.getElementById('audio-subtitle');
+        const externalLink = document.getElementById('external-link');
+
+        function switchChannel(channelId) {
+            const channel = channels[channelId];
+            if (!channel) return;
+
+            // Reset UI states for buttons
+            document.querySelectorAll('.channel-btn').forEach(btn => {
+                btn.classList.remove('active-channel', 'text-white');
+                btn.classList.add('text-slate-300');
+            });
+            const activeBtn = document.getElementById(`btn-${channelId}`);
+            if(activeBtn) {
+                activeBtn.classList.add('active-channel');
+                activeBtn.classList.remove('text-slate-300');
+            }
+
+            // Update header info
+            currentChannelName.innerHTML = `
+                <i data-lucide="${channel.type === 'video' ? 'tv' : 'radio'}" class="w-5 h-5 text-emerald-500"></i>
+                ${channel.name}
+            `;
+            
+            // Toggle external link
+            if (channel.type === 'video') {
+                externalLink.href = channel.external;
+                externalLink.innerHTML = `<i data-lucide="external-link" class="w-4 h-4"></i> <span>Watch on YouTube</span>`;
+                externalLink.classList.remove('hidden');
+            } else {
+                externalLink.classList.add('hidden');
+            }
+            
+            // Re-render new icons
+            lucide.createIcons();
+
+            // Handle Media Switching
+            if (channel.type === 'video') {
+                audioPlayer.pause();
+                audioPlayer.src = ""; // Clean up audio source to save bandwidth
+                audioVisualizer.classList.add('hidden');
+                
+                videoPlayer.classList.remove('hidden');
+                // Added mute=1 to satisfy browser autoplay policies without user interaction
+                videoPlayer.src = channel.src + "&autoplay=1&mute=1"; 
+                
+            } else {
+                videoPlayer.src = ""; // Clean up video iframe
+                videoPlayer.classList.add('hidden');
+                
+                audioVisualizer.classList.remove('hidden');
+                audioVisualizer.classList.add('flex');
+                
+                audioTitle.innerText = channel.arabic;
+                audioSubtitle.innerText = channel.name;
+                
+                audioPlayer.src = channel.src;
+                
+                // Try to auto-play audio (will likely be blocked until user interacts)
+                const playPromise = audioPlayer.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.info("Autoplay prevented by browser. Waiting for user interaction.");
+                        // The native audio controls are visible so the user can hit play manually
+                    });
+                }
+            }
+        }
+
+        // Custom Toast Notification Function (Replaces standard alert())
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            
+            // Show toast
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Improved Clipboard Sharing
+        function shareLink() {
+            const currentUrl = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Holy Quran Live',
+                    text: 'Live Quran Stream & Radio',
+                    url: currentUrl
+                }).catch(console.error);
+            } else {
+                // Fallback for document copy (works better in iframes/older deployments)
+                const textArea = document.createElement("textarea");
+                textArea.value = currentUrl;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showToast('Link copied to clipboard!');
+                } catch (err) {
+                    console.error('Failed to copy', err);
+                }
+                
+                textArea.remove();
+            }
+        }
+
+        // Default Load - Makkah Stream
+        window.addEventListener('DOMContentLoaded', () => {
+            switchChannel('makkah');
+        });
+    </script>
 </body>
 </html>
